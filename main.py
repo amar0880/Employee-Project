@@ -4,6 +4,7 @@ from utility import *
 
 db=[]
 
+
 class Test:
     
     def DashBoard(self):
@@ -18,20 +19,24 @@ class Test:
                         3. Update The Employee
                         4. Delete The Employee
                         5. Search Employee
-                        0. Exit 
+                        
               """)
 
 
     def createEmployee(self):
-        uname= input("Enter Name of The Employee : ")
-        uid =eval (input("Enter The Uid of the Employee : "))
-        usalary=eval (input("Enter the salary of the Employee :"))
-        udept= input("Enter The Employee Department : ")
-        e1=Employee(nm=uname,id=uid,sal=usalary,dept=udept)
-        
-        db.append(e1)
-        print(f"Employee {uname} Added Successfully In database....")
-        
+        try :
+            uname= input("Enter Name of The Employee : ")
+            uid =eval (input("Enter The Uid of the Employee : "))
+            usalary=eval (input("Enter the salary of the Employee :"))
+            udept= input("Enter The Employee Department : ")
+            e1=Employee(nm=uname,id=uid,sal=usalary,dept=udept)
+            
+            db.append(e1)
+            print(f"Employee {uname} Added Successfully In database....")
+        except Exception as e:
+            print(f"Error: An unexpected error occurrred : {e}")
+            
+            
     def displayEmployee(self):
         print("-"*85)
         print("|{i:^20}|{n:^20}|{s:^20}|{d:^20}|".format (i="E_ID", n="Name", s="Salary",d="Department"))
@@ -42,26 +47,33 @@ class Test:
             print("-"*85)
             
     def searchEmployee(self):
-        uid = eval(input("Enter Employee ID : "))
+        try:
+            uid = eval(input("Enter Employee ID : "))
+            
+            for i in range(len(db)):
+                if db[i].EID == uid:
+                    return 1
+            return -1
+        except ValueError :
+            print("Invalid Emloyee ID..Please Enter a Valid ID Number")
+            return -1
         
-        for i in range(len(db)):
-            if db[i].EID == uid:
-                return 1
-        return -1
-    
     def updateEmployee(self):
         i = self.searchEmployee()
         if i>= 0:
-            uname=input("Enter Updated Name of The Employee : ")
-            usalary=eval(input("Enter The updated salary of the Employee : "))
-            udept = input("Enter The Updated Employee Department : ")
-            
-            db[i].name=uname
-            db[i].salary=usalary
-            db[i].department=udept
-            
-            print(f"Employee {db[i].name} updated successfully in db...")
-            
+            try :
+                uname=input("Enter Updated Name of The Employee : ")
+                usalary=eval(input("Enter The updated salary of the Employee : "))
+                udept = input("Enter The Updated Employee Department : ")
+                
+                db[i].name=uname
+                db[i].salary=usalary
+                db[i].department=udept
+                
+                print(f"Employee {db[i].name} updated successfully in db...")
+            except ValueError :
+                print("Invalid salary. Please enter a valid number.")
+                
     def deleteEmployee(self):
         i =self.searchEmployee()
         if i>=0:

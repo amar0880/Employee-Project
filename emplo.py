@@ -1,3 +1,4 @@
+
 class Employee:
     def __init__(self, nm, id, sal,dept):
         self.name = nm
@@ -13,5 +14,4 @@ class Employee:
         return str(self.EID) + self.name   
         
         
-        
-  
+      
